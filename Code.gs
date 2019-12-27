@@ -1,4 +1,5 @@
 /**
+* Silas Monahan and Dan Monahan 12/2019
 * Get Distance or commute time driving or on transit between 2 different addresses.
 * @param start_address Address as string Ex. "300 N LaSalles St, Chicago, IL"
 * @param end_address Address as string Ex. "900 N LaSalles St, Chicago, IL"
@@ -35,16 +36,16 @@ function COMMUTE(start_address,end_address,mode,time) {
   // Utilities.sleep(5000);
   
   switch(mode){
-    case "distance":
+    case "distance": // get distance between two locations
         var directions = mapObj.getDirections();
-        Logger.log(directions)
+        Logger.log(directions);
   
         var meters = directions.routes[0].legs[0].distance.value;
         Logger.log(meters * 0.000621371);
         return meters * 0.000621371;
       break;
 
-    case "driving time arriving":
+    case "driving time arriving": // get driving time arriving at a certain time
       var now = new Date();
       var arrive = new Date(time);
       mapObj.setArrive(arrive);
@@ -54,16 +55,16 @@ function COMMUTE(start_address,end_address,mode,time) {
       Logger.log(directions);
 
       var duration = directions.routes[0].legs[0].duration.value;
-      var dur_mins = duration / 60
+      var dur_mins = duration / 60;
       
       Logger.log(duration / 60);
 
-      minutes = +minutes;
+      minutes = + minutes;
       minutes = minutes - dur_mins - 1;
       minutes = minutes.toFixed();
-      minutes = +minutes;
+      minutes = + minutes;
       if(minutes < 0) {
-        hour = +hour;
+        hour = + hour;
         hour = hour - 1;
         hour = hour.toString();
         minutes = 60 + minutes; // adds negative number to 60 which makes minutes the correct number of minutes
@@ -117,7 +118,7 @@ function COMMUTE(start_address,end_address,mode,time) {
       break;
       */
       
-    case "driving time departing":
+    case "driving time departing": // get driving time departing at certain time
       var depart = new Date(time);
       var serviceUrl = "https://maps.googleapis.com/maps/api/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
 "&mode="+Maps.DirectionFinder.Mode.DRIVING+"&key="+key;
@@ -154,7 +155,7 @@ function COMMUTE(start_address,end_address,mode,time) {
       return duration / 60;
       break;
       */
-    case "transit time arriving":
+    case "transit time arriving": // get transit time (using public transportaion) arriving at a certain time
       var now = new Date();
       var arrive = new Date(time);
       mapObj.setArrive(arrive);
@@ -164,16 +165,16 @@ function COMMUTE(start_address,end_address,mode,time) {
       Logger.log(directions);
 
       var duration = directions.routes[0].legs[0].duration.value;
-      var dur_mins = duration / 60
+      var dur_mins = duration / 60;
       
       Logger.log(duration / 60);
 
-      minutes = +minutes;
+      minutes = + minutes;
       minutes = minutes - dur_mins - 1;
       minutes = minutes.toFixed();
-      minutes = +minutes;
+      minutes = + minutes;
       if(minutes < 0) {
-        hour = +hour;
+        hour = + hour;
         hour = hour - 1;
         hour = hour.toString();
         minutes = 60 + minutes; // adds negative number to 60 which makes minutes the correct number of minutes
@@ -227,7 +228,7 @@ function COMMUTE(start_address,end_address,mode,time) {
       break;
       */
       
-    case "transit time departing":
+    case "transit time departing": // get transit time (using public transportaion) departing at a certain time
       var depart = new Date(time);
       var serviceUrl = "https://maps.googleapis.com/maps/api/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
 "&mode="+Maps.DirectionFinder.Mode.transit+"&key="+key;
@@ -290,7 +291,7 @@ function GOOGLEMAPSDRIVE(start_address,end_address,return_type,arriving_departin
   
   var now = new Date();
   var arrive = new Date('November 6, 2019 05:30:00 -0500');
-  mapObj.setArrive(arrive)
+  mapObj.setArrive(arrive);
   
   
   var directions = mapObj.getDirections();
@@ -303,8 +304,8 @@ function GOOGLEMAPSDRIVE(start_address,end_address,return_type,arriving_departin
   // get duration in seconds
   var duration = getTheLeg["duration"]["value"];
   
-  Logger.log(duration)
-  Logger.log(directions)
+  Logger.log(duration);
+  Logger.log(directions);
   
   //convert to minutes and return
   return duration / 60;
