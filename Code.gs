@@ -30,7 +30,7 @@ function COMMUTE(start_address,end_address,mode,time) {
   var mapObj = Maps.newDirectionFinder();
   mapObj.setOrigin(start_address);
   mapObj.setDestination(end_address);
-  var key = 'AIzaSyAkgeQVGDSUeg8nT2W-V3R9NKcgDE-TaZA';
+  var key = 'key';
   
   
   // Utilities.sleep(5000);
