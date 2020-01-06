@@ -33,7 +33,7 @@ function COMMUTE(start_address,end_address,mode,time) {
   var mapObj = Maps.newDirectionFinder();
   mapObj.setOrigin(start_address);
   mapObj.setDestination(end_address);
-  var key = 'key';
+  var key = 'AIzaSyAkgeQVGDSUeg8nT2W-V3R9NKcgDE-TaZA';
   
   
   Utilities.sleep(5000);
@@ -82,7 +82,7 @@ function COMMUTE(start_address,end_address,mode,time) {
       
       
       var depart = new Date(time);
-      var serviceUrl = "https://maps.googleapis.com/maps/api/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
+      var serviceUrl = "https://maps.googleapis.com/maps/api=1/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
 "&mode="+Maps.DirectionFinder.Mode.DRIVING+"&key="+key;
       Logger.log(serviceUrl);
       var options={
@@ -123,7 +123,7 @@ function COMMUTE(start_address,end_address,mode,time) {
       
     case "driving time departing": // get driving time departing at certain time
       var depart = new Date(time);
-      var serviceUrl = "https://maps.googleapis.com/maps/api/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
+      var serviceUrl = "https://maps.googleapis.com/maps/api=1/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
 "&mode="+Maps.DirectionFinder.Mode.DRIVING+"&key="+key;
       Logger.log(serviceUrl);
       var options={
@@ -192,8 +192,8 @@ function COMMUTE(start_address,end_address,mode,time) {
       
       
       var depart = new Date(time);
-      var serviceUrl = "https://maps.googleapis.com/maps/api/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
-"&mode="+Maps.DirectionFinder.Mode.transit+"&key="+key;
+      var serviceUrl = "https://maps.googleapis.com/maps/api=1/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
+"&mode="+Maps.DirectionFinder.Mode.TRANSIT+"&key="+key;
       Logger.log(serviceUrl);
       var options={
           muteHttpExceptions:true,
@@ -233,8 +233,8 @@ function COMMUTE(start_address,end_address,mode,time) {
       
     case "transit time departing": // get transit time (using public transportaion) departing at a certain time
       var depart = new Date(time);
-      var serviceUrl = "https://maps.googleapis.com/maps/api/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
-"&mode="+Maps.DirectionFinder.Mode.transit+"&key="+key;
+      var serviceUrl = "https://maps.googleapis.com/maps/api=1/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
+"&mode="+Maps.DirectionFinder.Mode.TRANSIT+"&key="+key;
       Logger.log(serviceUrl);
       var options={
           muteHttpExceptions:true,
