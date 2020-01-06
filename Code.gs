@@ -12,20 +12,23 @@
 function COMMUTE(start_address,end_address,mode,time) {
  
   /*
-  start_address = "107 Burley Street, Danvers, MA 01923";
-  end_address = "135 Berkshire Street, Cambridge, MA 02141";
   mode = "driving time arriving";
-  time = "November 6, 2024 07:45:00 -0500";
+  end_address = "135 Berkshire Street, Cambridge, MA 02141";
+  start_address = "107 Burley Street, Danvers, MA 01923";
+  time = "March 3, 2020 07:45:00 -0500";
   */
-  Logger.log(time);
-  var minutes = time.substring(20,22);
+
+  
+  
+  var minutes = time.substring(time.length-11,time.length-9);
   //Logger.log(minutes);
-  var hour = time.substring(18,19);
+  var hour = time.substring(time.length-14,time.length-12);
   //Logger.log(hour);
-  var beg = time.substring(0,18);
+  var beg = time.substring(0,time.length-14);
   //Logger.log(beg);
-  var end = time.substring(22);
+  var end = time.substring(time.length-9);
   //Logger.log(end);
+  
   
   var mapObj = Maps.newDirectionFinder();
   mapObj.setOrigin(start_address);
@@ -33,7 +36,7 @@ function COMMUTE(start_address,end_address,mode,time) {
   var key = 'key';
   
   
-  // Utilities.sleep(5000);
+  Utilities.sleep(5000);
   
   switch(mode){
     case "distance": // get distance between two locations
