@@ -10,11 +10,10 @@
  
 
 function COMMUTE(start_address,end_address,mode,time) {
- 
   /*
-  mode = "driving time arriving";
+  mode = "driving time departing";
   end_address = "135 Berkshire Street, Cambridge, MA 02141";
-  start_address = "107 Burley Street, Danvers, MA 01923";
+  start_address = "20 Brooks Park, Medford, MA 02155";
   time = "March 3, 2020 07:45:00 -0500";
   */
 
@@ -82,7 +81,7 @@ function COMMUTE(start_address,end_address,mode,time) {
       
       
       var depart = new Date(time);
-      var serviceUrl = "https://maps.googleapis.com/maps/api=1/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
+      var serviceUrl = "https://maps.googleapis.com/maps/api/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
 "&mode="+Maps.DirectionFinder.Mode.DRIVING+"&key="+key;
       Logger.log(serviceUrl);
       var options={
@@ -105,8 +104,6 @@ function COMMUTE(start_address,end_address,mode,time) {
       break;
       
       
-      
-      
       /*
       var now = new Date();
       var arrive = new Date(time);
@@ -123,7 +120,7 @@ function COMMUTE(start_address,end_address,mode,time) {
       
     case "driving time departing": // get driving time departing at certain time
       var depart = new Date(time);
-      var serviceUrl = "https://maps.googleapis.com/maps/api=1/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
+      var serviceUrl = "https://maps.googleapis.com/maps/api/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
 "&mode="+Maps.DirectionFinder.Mode.DRIVING+"&key="+key;
       Logger.log(serviceUrl);
       var options={
@@ -132,7 +129,7 @@ function COMMUTE(start_address,end_address,mode,time) {
          };
       var response=UrlFetchApp.fetch(serviceUrl, options);
       if(response.getResponseCode() == 200) {
-        var directions = JSON.parse(response.getContentText());
+        directions = JSON.parse(response.getContentText());
         if (directions !== null){
           Logger.log(directions);
           var duration_in_traffic = directions.routes[0].legs[0].duration_in_traffic.value;
@@ -189,30 +186,32 @@ function COMMUTE(start_address,end_address,mode,time) {
       }
       time = beg + hour + ":" + minutes + end;
       
-      
-      
       var depart = new Date(time);
       var serviceUrl = "https://maps.googleapis.com/maps/api=1/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
 "&mode="+Maps.DirectionFinder.Mode.TRANSIT+"&key="+key;
       Logger.log(serviceUrl);
+      Logger.log("no");
       var options={
           muteHttpExceptions:true,
           contentType: "application/json",
          };
       var response=UrlFetchApp.fetch(serviceUrl, options);
       if(response.getResponseCode() == 200) {
-        var directions = JSON.parse(response.getContentText());
+        directions = JSON.parse(response.getContentText());
         if (directions !== null){
           Logger.log(directions);
-          var duration_in_traffic = directions.routes[0].legs[0].duration_in_traffic.value;
+          var duration_in_traffic = directions.routes[0].legs[0].duration.value;
           Logger.log(duration_in_traffic / 60);
           return duration_in_traffic / 60;
           break;
             }
           }
-      Logger.log("Error: " + response.getResponseCode() + " From: " + start_address + ", To: " + end_address + ", customDate: " + depart + ", customDate.getTime(): " + depart.getTime() );
-      return false; // if the request is invalid
-      break;
+      if(response.getResponseCode() != 200) {
+        Logger.log("Error: " + response.getResponseCode() + " From: " + start_address + ", To: " + end_address + ", customDate: " + depart + ", customDate.getTime(): " + depart.getTime() );
+        Logger.log("yes");
+        return false; // if the request is invalid
+        break;
+      }
       
       
       /*
@@ -233,7 +232,7 @@ function COMMUTE(start_address,end_address,mode,time) {
       
     case "transit time departing": // get transit time (using public transportaion) departing at a certain time
       var depart = new Date(time);
-      var serviceUrl = "https://maps.googleapis.com/maps/api=1/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
+      var serviceUrl = "https://maps.googleapis.com/maps/api/directions/json?origin="+start_address+"&destination="+end_address+"&departure_time="+depart.getTime()+
 "&mode="+Maps.DirectionFinder.Mode.TRANSIT+"&key="+key;
       Logger.log(serviceUrl);
       var options={
@@ -244,8 +243,9 @@ function COMMUTE(start_address,end_address,mode,time) {
       if(response.getResponseCode() == 200) {
         var directions = JSON.parse(response.getContentText());
         if (directions !== null){
+          Logger.log("hi");
           Logger.log(directions);
-          var duration_in_traffic = directions.routes[0].legs[0].duration_in_traffic.value;
+          var duration_in_traffic = directions.routes[0].legs[0].duration.value;
           Logger.log(duration_in_traffic / 60);
           return duration_in_traffic / 60;
           break;
